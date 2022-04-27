@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:amazon_flutter/resources/authentication_methods.dart';
+import 'package:amazon_flutter/screens/sign_in_screen.dart';
 import 'package:amazon_flutter/utils/color_themes.dart';
 import 'package:amazon_flutter/utils/constants.dart';
 import 'package:amazon_flutter/utils/utils.dart';
@@ -134,7 +135,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     color: Colors.grey[400]!,
                     isLoading: false,
                     onPressed: () {
-                      Navigator.pop(context);
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) {
+                        return const SignInScreen();
+                      }));
                     })
               ],
             )),

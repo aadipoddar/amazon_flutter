@@ -8,7 +8,7 @@ import 'package:amazon_flutter/widgets/text_field_widget.dart';
 import 'package:flutter/material.dart';
 
 class SignInScreen extends StatefulWidget {
-  SignInScreen({Key? key}) : super(key: key);
+  const SignInScreen({Key? key}) : super(key: key);
 
   @override
   State<SignInScreen> createState() => _SignInScreenState();
@@ -124,7 +124,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     color: Colors.grey[400]!,
                     isLoading: false,
                     onPressed: () {
-                      Navigator.push(context,
+                      Navigator.pushReplacement(context,
                           MaterialPageRoute(builder: (context) {
                         return SignUpScreen();
                       }));
