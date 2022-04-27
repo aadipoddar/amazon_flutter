@@ -1,3 +1,4 @@
+import 'package:amazon_flutter/resources/authentication_methods.dart';
 import 'package:amazon_flutter/screens/sign_up_screen.dart';
 import 'package:amazon_flutter/utils/color_themes.dart';
 import 'package:amazon_flutter/utils/constants.dart';
@@ -16,6 +17,7 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  AuthenticationMethods authenticationMethods = AuthenticationMethods();
 
   @override
   void dispose() {
@@ -82,7 +84,22 @@ class _SignInScreenState extends State<SignInScreen> {
                             ),
                             color: yellowColor,
                             isLoading: false,
-                            onPressed: () {},
+                            onPressed: () async {
+                              String output =
+                                  await authenticationMethods.signInUser(
+                                email: emailController.text,
+                                password: passwordController.text,
+                              );
+
+                              if (output == "success") {
+                                //fuctions
+                                Utils().showSnackBar(
+                                    context: context, content: output);
+                              } else {
+                                Utils().showSnackBar(
+                                    context: context, content: output);
+                              }
+                            },
                           ),
                         ),
                       ],

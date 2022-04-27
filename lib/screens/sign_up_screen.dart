@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:amazon_flutter/resources/authentication_methods.dart';
 import 'package:amazon_flutter/utils/color_themes.dart';
 import 'package:amazon_flutter/utils/constants.dart';
 import 'package:amazon_flutter/utils/utils.dart';
@@ -17,6 +20,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController addressController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  AuthenticationMethods authenticationMethods = AuthenticationMethods();
 
   @override
   void dispose() {
@@ -94,13 +99,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               alignment: Alignment.center,
                               child: CustomMainButton(
                                 child: const Text(
-                                  'Sign In',
+                                  'Sign Up',
                                   style: TextStyle(
                                       letterSpacing: 0.6, color: Colors.black),
                                 ),
                                 color: yellowColor,
                                 isLoading: false,
-                                onPressed: () {},
+                                onPressed: () async {
+                                  String output =
+                                      await authenticationMethods.signUpUser(
+                                          name: nameController.text,
+                                          address: addressController.text,
+                                          email: emailController.text,
+                                          password: passwordController.text);
+
+                                  if (output == "success") {
+                                    log("Doing Next Step");
+                                  } else {
+                                    // error
+                                    Utils().showSnackBar(
+                                        context: context, content: output);
+                                  }
+                                },
                               ),
                             ),
                           ],
