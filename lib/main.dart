@@ -1,3 +1,4 @@
+import 'package:amazon_flutter/screens/sign_in_screen.dart';
 import 'package:amazon_flutter/utils/color_themes.dart';
 import 'package:flutter/material.dart';
 
@@ -16,9 +17,7 @@ class AmazonClone extends StatelessWidget {
       theme: ThemeData.light().copyWith(
         scaffoldBackgroundColor: backgroundColor,
       ),
-      home: Scaffold(
-        body: const Text('Amazon'),
-      ),
+      home: SignInScreen(),
     );
   }
 }
