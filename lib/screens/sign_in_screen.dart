@@ -101,7 +101,7 @@ class _SignInScreenState extends State<SignInScreen> {
                               if (output == "success") {
                                 //fuctions
                                 Utils().showSnackBar(
-                                    context: context, content: output);
+                                    context: context, content: "Signed In");
                               } else {
                                 Utils().showSnackBar(
                                     context: context, content: output);

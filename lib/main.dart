@@ -1,3 +1,4 @@
+import 'package:amazon_flutter/layout/screen_layout.dart';
 import 'package:amazon_flutter/screens/sign_in_screen.dart';
 import 'package:amazon_flutter/utils/color_themes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -43,11 +44,7 @@ class AmazonClone extends StatelessWidget {
                   color: Colors.orange,
                 ));
               } else if (user.hasData) {
-                return ElevatedButton(
-                    onPressed: () {
-                      FirebaseAuth.instance.signOut();
-                    },
-                    child: const Text('Sign Out'));
+                return const ScreenLayout();
               } else {
                 return const SignInScreen();
               }
