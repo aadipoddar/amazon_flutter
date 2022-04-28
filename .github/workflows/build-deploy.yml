@@ -17,13 +17,19 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
     
-    - name: Install Flutter
-      uses: subosito/flutter-action@v1
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
       with:
-        flutter-version: '2.16.2'
+          channel: "stable"
     
-    - name: Get dependencies
-      run: flutter pub get
+    - name: Version
+      run: flutter --version
+
+    - name: Doctor
+      run: flutter doctor
+
+    - name: Pub Get
+      run: flutter pub gett
     
     - name: Build release project
       run: flutter build web
