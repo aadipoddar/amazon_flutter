@@ -10,7 +10,7 @@ import 'package:amazon_flutter/widgets/text_field_widget.dart';
 import 'package:flutter/material.dart';
 
 class SignUpScreen extends StatefulWidget {
-  SignUpScreen({Key? key}) : super(key: key);
+  const SignUpScreen({Key? key}) : super(key: key);
 
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
@@ -23,6 +23,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController passwordController = TextEditingController();
 
   AuthenticationMethods authenticationMethods = AuthenticationMethods();
+
+  bool isLoading = false;
 
   @override
   void dispose() {
@@ -105,19 +107,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       letterSpacing: 0.6, color: Colors.black),
                                 ),
                                 color: yellowColor,
-                                isLoading: false,
+                                isLoading: isLoading,
                                 onPressed: () async {
+                                  setState(() {
+                                    isLoading = true;
+                                  });
                                   String output =
                                       await authenticationMethods.signUpUser(
                                           name: nameController.text,
                                           address: addressController.text,
                                           email: emailController.text,
                                           password: passwordController.text);
-
+                                  setState(() {
+                                    isLoading = false;
+                                  });
                                   if (output == "success") {
-                                    log("Doing Next Step");
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const SignInScreen()));
                                   } else {
-                                    // error
                                     Utils().showSnackBar(
                                         context: context, content: output);
                                   }

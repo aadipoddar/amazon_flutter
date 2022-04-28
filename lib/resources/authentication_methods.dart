@@ -1,7 +1,10 @@
+import 'package:amazon_flutter/model/user_details_model.dart';
+import 'package:amazon_flutter/resources/cloudfirestore_methods.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthenticationMethods {
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  CloudFirestoreClass cloudFirestoreClass = CloudFirestoreClass();
 
   Future<String> signUpUser({
     required String name,
@@ -20,6 +23,11 @@ class AuthenticationMethods {
       try {
         await firebaseAuth.createUserWithEmailAndPassword(
             email: email, password: password);
+        UserDetailsModel user = UserDetailsModel(
+          name: name,
+          address: address,
+        );
+        await cloudFirestoreClass.uploadNameAndAddressToDatabase(user: user);
         output = "success";
       } on FirebaseAuthException catch (e) {
         output = e.message.toString();
