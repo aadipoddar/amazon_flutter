@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:amazon_flutter/resources/authentication_methods.dart';
 import 'package:amazon_flutter/screens/sign_in_screen.dart';
 import 'package:amazon_flutter/utils/color_themes.dart';

@@ -1,3 +1,6 @@
+import 'package:amazon_flutter/screens/home_screen.dart';
+import 'package:flutter/material.dart';
+
 const double kAppBarHeight = 80;
 
 const String amazonLogoUrl =
@@ -13,6 +16,19 @@ const List<String> categoriesList = [
   "Appliances",
   "Books, Toys",
   "Essential"
+];
+
+const List<Widget> screens = [
+  HomeScreen(),
+  Center(
+    child: Text("Account Screen"),
+  ),
+  Center(
+    child: Text("Cart Screen"),
+  ),
+  Center(
+    child: Text("More Screen"),
+  ),
 ];
 
 const List<String> categoryLogos = [

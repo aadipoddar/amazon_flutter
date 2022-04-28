@@ -133,7 +133,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     onPressed: () {
                       Navigator.pushReplacement(context,
                           MaterialPageRoute(builder: (context) {
-                        return SignUpScreen();
+                        return const SignUpScreen();
                       }));
                     })
               ],
