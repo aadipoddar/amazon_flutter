@@ -29,7 +29,7 @@ jobs:
       run: flutter doctor
 
     - name: Pub Get
-      run: flutter pub gett
+      run: flutter pub get
     
     - name: Build release project
       run: flutter build web
