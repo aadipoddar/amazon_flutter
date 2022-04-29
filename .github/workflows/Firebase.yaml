@@ -1,4 +1,4 @@
-name: Build and Release APK
+name: Firebase Build and Deploy
 on: push
 jobs:
     hosting:
