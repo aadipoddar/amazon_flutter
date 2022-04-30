@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 class ProductsShowcaseListView extends StatelessWidget {
   final String title;
   final List<Widget> children;
-
   const ProductsShowcaseListView({
     Key? key,
     required this.title,
@@ -17,7 +16,6 @@ class ProductsShowcaseListView extends StatelessWidget {
     Size screenSize = Utils().getScreenSize();
     double height = screenSize.height / 4;
     double titleHeight = 25;
-
     return Container(
       margin: const EdgeInsets.all(8),
       padding: const EdgeInsets.all(8),
@@ -42,12 +40,10 @@ class ProductsShowcaseListView extends StatelessWidget {
                 const Padding(
                   padding: EdgeInsets.only(left: 14),
                   child: Text(
-                    "Show More",
-                    style: TextStyle(
-                      color: activeCyanColor,
-                    ),
+                    "Show more",
+                    style: TextStyle(color: activeCyanColor),
                   ),
-                ),
+                )
               ],
             ),
           ),
@@ -58,7 +54,7 @@ class ProductsShowcaseListView extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               children: children,
             ),
-          ),
+          )
         ],
       ),
     );

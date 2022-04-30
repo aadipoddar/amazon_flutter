@@ -1,103 +1,130 @@
 import 'package:amazon_flutter/utils/color_themes.dart';
 import 'package:amazon_flutter/utils/constants.dart';
+import 'package:amazon_flutter/utils/utils.dart';
 import 'package:flutter/material.dart';
 
-class BannerAddWidget extends StatefulWidget {
-  const BannerAddWidget({Key? key}) : super(key: key);
+class AdBannerWidget extends StatefulWidget {
+  const AdBannerWidget({Key? key}) : super(key: key);
 
   @override
-  State<BannerAddWidget> createState() => _BannerAddWidgetState();
+  State<AdBannerWidget> createState() => _AdBannerWidgetState();
 }
 
-class _BannerAddWidgetState extends State<BannerAddWidget> {
+class _AdBannerWidgetState extends State<AdBannerWidget> {
   int currentAd = 0;
-
+  
   @override
   Widget build(BuildContext context) {
-    Size screenSize = MediaQuery.of(context).size;
-    double smallAdHeight = screenSize.width / 5;
-
-    return GestureDetector(
-      onHorizontalDragEnd: (_) {
-        if (currentAd == largeAds.length - 1) {
-          currentAd = -1;
-        }
-        setState(() {
-          currentAd++;
-        });
-      },
-      child: Column(
-        children: [
-          // Image with gradient
-          Stack(
-            children: [
-              Image.network(
-                largeAds[currentAd],
+    Size screenSize = Utils().getScreenSize();
+    double smallAdDimension = screenSize.width / 5;
+    //Image and gradient
+    return Column(
+      children: [
+        Stack(
+          children: [
+            GestureDetector(
+              onHorizontalDragEnd: (_) {
+                if (currentAd == largeAds.length - 1) {
+                  setState(() {
+                    currentAd = 0;
+                  });
+                } else {
+                  setState(() {
+                    currentAd++;
+                  });
+                }
+              },
+              child: SizedBox(
                 width: double.infinity,
+                child: Image.network(
+                  largeAds[currentAd],
+                ),
               ),
-              Positioned(
-                bottom: 0,
-                child: Container(
-                  width: screenSize.width,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter,
-                      colors: [
-                        backgroundColor,
-                        backgroundColor.withOpacity(0),
-                      ],
-                    ),
+            ),
+            Positioned(
+              bottom: 0,
+              child: Container(
+                width: screenSize.width,
+                height: screenSize.height / 8,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      backgroundColor,
+                      backgroundColor.withOpacity(0.000001)
+                    ],
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
                   ),
                 ),
               ),
+            ),
+          ],
+        ),
+        Container(
+          height: smallAdDimension,
+          width: screenSize.width,
+          color: backgroundColor,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              getSmallAdWidget(
+                index: 0,
+                side: smallAdDimension,
+              ),
+              getSmallAdWidget(
+                index: 1,
+                side: smallAdDimension,
+              ),
+              getSmallAdWidget(
+                index: 2,
+                side: smallAdDimension,
+              ),
+              getSmallAdWidget(
+                index: 3,
+                side: smallAdDimension,
+              ),
             ],
           ),
-          Container(
-            color: backgroundColor,
-            width: screenSize.width,
-            height: smallAdHeight,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                getSmallAdsFromIndex(0, smallAdHeight),
-                getSmallAdsFromIndex(1, smallAdHeight),
-                getSmallAdsFromIndex(2, smallAdHeight),
-                getSmallAdsFromIndex(3, smallAdHeight),
-              ],
-            ),
-          ),
-        ],
-      ),
+        )
+      ],
     );
   }
 
-  Widget getSmallAdsFromIndex(int index, double height) {
+  Widget getSmallAdWidget({required int index, required double side}) {
     return Container(
-      height: height,
-      width: height,
+      height: side,
+      width: side,
       decoration: ShapeDecoration(
         color: Colors.white,
         shadows: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.2),
-            blurRadius: 5,
-            spreadRadius: 1,
-          ),
+              color: Colors.black.withOpacity(0.3),
+              spreadRadius: 1,
+              blurRadius: 8),
         ],
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
       ),
-      child: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Image.network(smallAds[index]),
-            const SizedBox(height: 5),
-            Text(adItemNames[index]),
-          ],
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: FittedBox(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Image.network(
+                smallAds[index],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: Text(
+                  adItemNames[index],
+                  style: const TextStyle(
+                      fontSize: 13, fontWeight: FontWeight.w500),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

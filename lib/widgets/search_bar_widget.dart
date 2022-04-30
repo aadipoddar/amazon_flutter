@@ -4,11 +4,9 @@ import 'package:amazon_flutter/utils/constants.dart';
 import 'package:amazon_flutter/utils/utils.dart';
 import 'package:flutter/material.dart';
 
-// ignore: must_be_immutable
 class SearchBarWidget extends StatelessWidget with PreferredSizeWidget {
   final bool isReadOnly;
   final bool hasBackButton;
-
   SearchBarWidget({
     Key? key,
     required this.isReadOnly,
@@ -21,8 +19,8 @@ class SearchBarWidget extends StatelessWidget with PreferredSizeWidget {
 
   OutlineInputBorder border = OutlineInputBorder(
     borderRadius: BorderRadius.circular(7),
-    borderSide: BorderSide(
-      color: Colors.grey[400]!,
+    borderSide: const BorderSide(
+      color: Colors.grey,
       width: 1,
     ),
   );
@@ -44,11 +42,10 @@ class SearchBarWidget extends StatelessWidget with PreferredSizeWidget {
         children: [
           hasBackButton
               ? IconButton(
-                  icon: const Icon(Icons.arrow_back),
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                )
+                  icon: const Icon(Icons.arrow_back))
               : Container(),
           SizedBox(
             width: screenSize.width * 0.7,
@@ -62,22 +59,19 @@ class SearchBarWidget extends StatelessWidget with PreferredSizeWidget {
                     offset: const Offset(0, 5),
                   ),
                 ],
-                borderRadius: BorderRadius.circular(7),
               ),
               child: TextField(
                 readOnly: isReadOnly,
                 onTap: () {
                   if (isReadOnly) {
                     Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const SearchScreen(),
-                      ),
-                    );
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const SearchScreen()));
                   }
                 },
                 decoration: InputDecoration(
-                  hintText: 'Search for Something in Amazon',
+                  hintText: "Search for something in Amazon",
                   fillColor: Colors.white,
                   filled: true,
                   border: border,
@@ -89,7 +83,7 @@ class SearchBarWidget extends StatelessWidget with PreferredSizeWidget {
           IconButton(
             onPressed: () {},
             icon: const Icon(Icons.mic_none_outlined),
-          ),
+          )
         ],
       ),
     );

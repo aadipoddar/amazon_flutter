@@ -1,8 +1,11 @@
+import 'package:amazon_flutter/model/user_details_model.dart';
+import 'package:amazon_flutter/utils/constants.dart';
 import 'package:amazon_flutter/widgets/banner_add_widget.dart';
 import 'package:amazon_flutter/widgets/categories_horizontal_list_view_bar.dart';
 import 'package:amazon_flutter/widgets/products_showcase_list_view.dart';
 import 'package:amazon_flutter/widgets/search_bar_widget.dart';
 import 'package:amazon_flutter/widgets/simple_product_widget.dart';
+import 'package:amazon_flutter/widgets/user_details_bar.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -13,6 +16,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  ScrollController controller = ScrollController();
+  double offset = 0;
+
   List<Widget> testChildren = [
     const SimpleProductWidget(
         url: "https://m.media-amazon.com/images/I/51QISbJp5-L._SX3000_.jpg"),
@@ -29,35 +35,62 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    controller.addListener(() {
+      setState(() {
+        offset = controller.offset;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: SearchBarWidget(
         isReadOnly: true,
         hasBackButton: false,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const CategoriesHorizontalListViewBar(),
-            const BannerAddWidget(),
-            ProductsShowcaseListView(
-              title: "Upto 70% Off",
-              children: testChildren,
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            controller: controller,
+            child: Column(
+              children: [
+                const SizedBox(height: kAppBarHeight / 3),
+                const CategoriesHorizontalListViewBar(),
+                const AdBannerWidget(),
+                ProductsShowcaseListView(
+                  title: "Upto 70% Off",
+                  children: testChildren,
+                ),
+                ProductsShowcaseListView(
+                  title: "Upto 60% Off",
+                  children: testChildren,
+                ),
+                ProductsShowcaseListView(
+                  title: "Upto 50% Off",
+                  children: testChildren,
+                ),
+                ProductsShowcaseListView(
+                  title: "Explore More",
+                  children: testChildren,
+                ),
+              ],
             ),
-            ProductsShowcaseListView(
-              title: "Upto 60% Off",
-              children: testChildren,
-            ),
-            ProductsShowcaseListView(
-              title: "Upto 50% Off",
-              children: testChildren,
-            ),
-            ProductsShowcaseListView(
-              title: "Explore More",
-              children: testChildren,
-            ),
-          ],
-        ),
+          ),
+          UserDetailsBar(
+            offset: offset,
+            userDetails:
+                UserDetailsModel(name: "Aadi", address: "Kolkata West Bengal"),
+          ),
+        ],
       ),
     );
   }
