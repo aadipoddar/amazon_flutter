@@ -4,6 +4,7 @@ import 'package:amazon_flutter/utils/constants.dart';
 import 'package:amazon_flutter/utils/utils.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class SearchBarWidget extends StatelessWidget with PreferredSizeWidget {
   final bool isReadOnly;
   final bool hasBackButton;
