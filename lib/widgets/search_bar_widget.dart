@@ -1,3 +1,4 @@
+import 'package:amazon_flutter/screens/results_screen.dart';
 import 'package:amazon_flutter/screens/search_screen.dart';
 import 'package:amazon_flutter/utils/color_themes.dart';
 import 'package:amazon_flutter/utils/constants.dart';
@@ -62,6 +63,14 @@ class SearchBarWidget extends StatelessWidget with PreferredSizeWidget {
                 ],
               ),
               child: TextField(
+                onSubmitted: (String query) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ResultsScreen(query: query),
+                    ),
+                  );
+                },
                 readOnly: isReadOnly,
                 onTap: () {
                   if (isReadOnly) {
