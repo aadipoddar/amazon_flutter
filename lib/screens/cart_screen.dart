@@ -51,7 +51,7 @@ class _CartScreenState extends State<CartScreen> {
                   return CartItemWidget(
                     product: ProductModel(
                       url:
-                          "https://images.unsplash.com/photo-1523206489230-c012c64b2b48?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
+                          "https://m.media-amazon.com/images/I/11uufjN3lYL._SX90_SY90_.png",
                       productName: "Mobile Phone - Apple Iphone X",
                       cost: 15000,
                       discount: 0,
