@@ -1,3 +1,4 @@
+import 'package:amazon_flutter/model/product_model.dart';
 import 'package:amazon_flutter/screens/account_screen.dart';
 import 'package:amazon_flutter/screens/cart_screen.dart';
 import 'package:amazon_flutter/screens/home_screen.dart';
@@ -68,16 +69,72 @@ const String amazonLogo =
     "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/2560px-Amazon_logo.svg.png";
 
 List<Widget> testChildren = [
-  const SimpleProductWidget(
-      url: "https://m.media-amazon.com/images/I/51QISbJp5-L._SX3000_.jpg"),
-  const SimpleProductWidget(
-      url: "https://m.media-amazon.com/images/I/11uufjN3lYL._SX90_SY90_.png"),
-  const SimpleProductWidget(
-      url: "https://m.media-amazon.com/images/I/51QISbJp5-L._SX3000_.jpg"),
-  const SimpleProductWidget(
-      url: "https://m.media-amazon.com/images/I/11uufjN3lYL._SX90_SY90_.png"),
-  const SimpleProductWidget(
-      url: "https://m.media-amazon.com/images/I/51QISbJp5-L._SX3000_.jpg"),
-  const SimpleProductWidget(
-      url: "https://m.media-amazon.com/images/I/11uufjN3lYL._SX90_SY90_.png"),
+  SimpleProductWidget(
+    productModel: ProductModel(
+        url: "https://m.media-amazon.com/images/I/11uufjN3lYL._SX90_SY90_.png",
+        productName: "Rick Astley",
+        cost: 9999999999999,
+        discount: 0,
+        uid: "eioejfbkn",
+        sellerName: "Rick Seller",
+        sellerUid: "983498ihjb",
+        rating: 1,
+        noOfRating: 1),
+  ),
+  SimpleProductWidget(
+    productModel: ProductModel(
+        url: "https://m.media-amazon.com/images/I/11uufjN3lYL._SX90_SY90_.png",
+        productName: "Rick Astley",
+        cost: 9999999999999,
+        discount: 0,
+        uid: "eioejfbkn",
+        sellerName: "Rick Seller",
+        sellerUid: "983498ihjb",
+        rating: 1,
+        noOfRating: 1),
+  ),
+  SimpleProductWidget(
+    productModel: ProductModel(
+        url: "https://m.media-amazon.com/images/I/11uufjN3lYL._SX90_SY90_.png",
+        productName: "Rick Astley",
+        cost: 9999999999999,
+        discount: 0,
+        uid: "eioejfbkn",
+        sellerName: "Rick Seller",
+        sellerUid: "983498ihjb",
+        rating: 1,
+        noOfRating: 1),
+  ),
+  SimpleProductWidget(
+    productModel: ProductModel(
+        url: "https://m.media-amazon.com/images/I/11uufjN3lYL._SX90_SY90_.png",
+        productName: "Rick Astley",
+        cost: 9999999999999,
+        discount: 0,
+        uid: "eioejfbkn",
+        sellerName: "Rick Seller",
+        sellerUid: "983498ihjb",
+        rating: 1,
+        noOfRating: 1),
+  ),
+  SimpleProductWidget(
+    productModel: ProductModel(
+        url: "https://m.media-amazon.com/images/I/11uufjN3lYL._SX90_SY90_.png",
+        productName: "Rick Astley",
+        cost: 9999999999999,
+        discount: 0,
+        uid: "eioejfbkn",
+        sellerName: "Rick Seller",
+        sellerUid: "983498ihjb",
+        rating: 1,
+        noOfRating: 1),
+  ),
+];
+
+List<String> keysOfRating = [
+  "Very bad",
+  "Poor",
+  "Average",
+  "Good",
+  "Excellent"
 ];

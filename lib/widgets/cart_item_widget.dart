@@ -1,3 +1,4 @@
+import 'package:amazon_flutter/screens/product_screen.dart';
 import 'package:amazon_flutter/utils/color_themes.dart';
 import 'package:amazon_flutter/utils/utils.dart';
 import 'package:amazon_flutter/widgets/custom_simple_rounded_button.dart';
@@ -30,7 +31,14 @@ class CartItemWidget extends StatelessWidget {
         children: [
           Expanded(
             child: GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProductScreen(productModel: product),
+                  ),
+                );
+              },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
