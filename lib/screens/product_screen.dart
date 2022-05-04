@@ -1,5 +1,7 @@
 import 'package:amazon_flutter/model/product_model.dart';
 import 'package:amazon_flutter/model/review_model.dart';
+import 'package:amazon_flutter/providers/user_details_provider.dart';
+import 'package:amazon_flutter/resources/cloudfirestore_methods.dart';
 import 'package:amazon_flutter/utils/color_themes.dart';
 import 'package:amazon_flutter/utils/constants.dart';
 import 'package:amazon_flutter/utils/utils.dart';
@@ -11,7 +13,9 @@ import 'package:amazon_flutter/widgets/review_dialog.dart';
 import 'package:amazon_flutter/widgets/review_widget.dart';
 import 'package:amazon_flutter/widgets/search_bar_widget.dart';
 import 'package:amazon_flutter/widgets/user_details_bar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProductScreen extends StatefulWidget {
   final ProductModel productModel;
@@ -77,16 +81,14 @@ class _ProductScreenState extends State<ProductScreen> {
                             child: Container(
                               height: screenSize.height / 3,
                               constraints: BoxConstraints(
-                                maxHeight: screenSize.height / 3,
-                              ),
+                                  maxHeight: screenSize.height / 3),
                               child: Image.network(widget.productModel.url),
                             ),
                           ),
                           spaceThingy,
                           CostWidget(
-                            color: Colors.black,
-                            cost: widget.productModel.cost,
-                          ),
+                              color: Colors.black,
+                              cost: widget.productModel.cost),
                           spaceThingy,
                           CustomMainButton(
                             child: const Text(
@@ -95,7 +97,16 @@ class _ProductScreenState extends State<ProductScreen> {
                             ),
                             color: Colors.orange,
                             isLoading: false,
-                            onPressed: () {},
+                            onPressed: () async {
+                              await CloudFirestoreClass().addProductToOrders(
+                                  model: widget.productModel,
+                                  userDetails: Provider.of<UserDetailsProvider>(
+                                          context,
+                                          listen: false)
+                                      .userDetails);
+                              Utils().showSnackBar(
+                                  context: context, content: "Done");
+                            },
                           ),
                           spaceThingy,
                           CustomMainButton(
@@ -105,33 +116,53 @@ class _ProductScreenState extends State<ProductScreen> {
                             ),
                             color: yellowColor,
                             isLoading: false,
-                            onPressed: () {},
+                            onPressed: () async {
+                              await CloudFirestoreClass().addProductToCart(
+                                  productModel: widget.productModel);
+                              Utils().showSnackBar(
+                                  context: context, content: "Added to cart.");
+                            },
                           ),
                           spaceThingy,
                           CustomSimpleRoundedButton(
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (context) => const ReviewDialog(),
-                              );
-                            },
-                            text: "Add a review for this product",
-                          ),
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => ReviewDialog(
+                                    productUid: widget.productModel.uid,
+                                  ),
+                                );
+                              },
+                              text: "Add a review for this product"),
                         ],
                       ),
                     ),
                     SizedBox(
                       height: screenSize.height,
-                      child: ListView.builder(
-                        itemCount: 10,
-                        itemBuilder: (context, index) {
-                          return const ReviewWidget(
-                            review: ReviewModel(
-                              senderName: "Rick",
-                              description: "Very Good Product",
-                              rating: 3,
-                            ),
-                          );
+                      child: StreamBuilder(
+                        stream: FirebaseFirestore.instance
+                            .collection("products")
+                            .doc(widget.productModel.uid)
+                            .collection("reviews")
+                            .snapshots(),
+                        builder: (context,
+                            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                                snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Container();
+                          } else {
+                            return ListView.builder(
+                              itemCount: snapshot.data!.docs.length,
+                              itemBuilder: (context, index) {
+                                ReviewModel model =
+                                    ReviewModel.getModelFromJson(
+                                        json:
+                                            snapshot.data!.docs[index].data());
+                                return ReviewWidget(review: model);
+                              },
+                            );
+                          }
                         },
                       ),
                     ),
@@ -139,7 +170,9 @@ class _ProductScreenState extends State<ProductScreen> {
                 ),
               ),
             ),
-            const UserDetailsBar(offset: 0)
+            const UserDetailsBar(
+              offset: 0,
+            )
           ],
         ),
       ),
