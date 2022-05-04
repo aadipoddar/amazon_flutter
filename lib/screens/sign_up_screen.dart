@@ -16,20 +16,18 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController nameController = TextEditingController();
-  TextEditingController addressController = TextEditingController();
   TextEditingController emailController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-
   AuthenticationMethods authenticationMethods = AuthenticationMethods();
-
   bool isLoading = false;
 
   @override
   void dispose() {
     super.dispose();
     nameController.dispose();
-    addressController.dispose();
     emailController.dispose();
+    addressController.dispose();
     passwordController.dispose();
   }
 
@@ -45,111 +43,131 @@ class _SignUpScreenState extends State<SignUpScreen> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
             child: Center(
-                child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Image.network(
-                  amazonLogo,
-                  height: screenSize.height * 0.10,
-                ),
-                SizedBox(
-                  height: screenSize.height * 0.7,
-                  child: FittedBox(
-                    child: Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Image.network(
+                    amazonLogo,
+                    height: screenSize.height * 0.10,
+                  ),
+                  SizedBox(
+                    height: screenSize.height * 0.7,
+                    child: FittedBox(
+                      child: Container(
                         height: screenSize.height * 0.85,
                         width: screenSize.width * 0.8,
                         padding: const EdgeInsets.all(25),
                         decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey, width: 1)),
+                          border: Border.all(
+                            color: Colors.grey,
+                            width: 1,
+                          ),
+                        ),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const Text(
-                              'Sign-Up',
+                              "Sign-Up",
                               style: TextStyle(
                                   fontWeight: FontWeight.w500, fontSize: 33),
                             ),
                             TextFieldWidget(
-                              title: 'Name',
+                              title: "Name",
                               controller: nameController,
                               obscureText: false,
-                              hintText: 'Enter your Name',
+                              hintText: "Enter your name",
                             ),
                             TextFieldWidget(
-                              title: 'Address',
+                              title: "Address",
                               controller: addressController,
                               obscureText: false,
-                              hintText: 'Enter your Address',
+                              hintText: "Enter your address",
                             ),
                             TextFieldWidget(
-                              title: 'Email',
+                              title: "Email",
                               controller: emailController,
                               obscureText: false,
-                              hintText: 'Enter your Email',
+                              hintText: "Enter your email",
                             ),
                             TextFieldWidget(
-                              title: 'Password',
+                              title: "Password",
                               controller: passwordController,
                               obscureText: true,
-                              hintText: 'Enter your Password',
+                              hintText: "Enter your password",
                             ),
                             Align(
                               alignment: Alignment.center,
                               child: CustomMainButton(
                                 child: const Text(
-                                  'Sign Up',
+                                  "Sign Un",
                                   style: TextStyle(
                                       letterSpacing: 0.6, color: Colors.black),
                                 ),
                                 color: yellowColor,
                                 isLoading: isLoading,
                                 onPressed: () async {
-                                  setState(() {
-                                    isLoading = true;
-                                  });
+                                  setState(
+                                    () {
+                                      isLoading = true;
+                                    },
+                                  );
                                   String output =
                                       await authenticationMethods.signUpUser(
                                           name: nameController.text,
                                           address: addressController.text,
                                           email: emailController.text,
                                           password: passwordController.text);
-                                  setState(() {
-                                    isLoading = false;
-                                  });
+                                  setState(
+                                    () {
+                                      isLoading = false;
+                                    },
+                                  );
                                   if (output == "success") {
                                     Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) =>
+                                            builder: (_) =>
                                                 const SignInScreen()));
                                   } else {
+                                    //error
                                     Utils().showSnackBar(
                                         context: context, content: output);
                                   }
                                 },
                               ),
-                            ),
+                            )
                           ],
-                        )),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-                CustomMainButton(
-                    child: const Text('Back to Sign In',
-                        style:
-                            TextStyle(letterSpacing: 0.6, color: Colors.black)),
+                  CustomMainButton(
+                    child: const Text(
+                      "Back",
+                      style: TextStyle(
+                        letterSpacing: 0.6,
+                        color: Colors.black,
+                      ),
+                    ),
                     color: Colors.grey[400]!,
                     isLoading: false,
                     onPressed: () {
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) {
-                        return const SignInScreen();
-                      }));
-                    })
-              ],
-            )),
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return const SignInScreen();
+                          },
+                        ),
+                      );
+                    },
+                  )
+                ],
+              ),
+            ),
           ),
         ),
       ),

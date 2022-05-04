@@ -18,7 +18,6 @@ class _SignInScreenState extends State<SignInScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   AuthenticationMethods authenticationMethods = AuthenticationMethods();
-
   bool isLoading = false;
 
   @override
@@ -40,104 +39,127 @@ class _SignInScreenState extends State<SignInScreen> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
             child: Center(
-                child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Image.network(
-                  amazonLogo,
-                  height: screenSize.height * 0.10,
-                ),
-                Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Image.network(
+                    amazonLogo,
+                    height: screenSize.height * 0.10,
+                  ),
+                  Container(
                     height: screenSize.height * 0.6,
                     width: screenSize.width * 0.8,
                     padding: const EdgeInsets.all(25),
                     decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey, width: 1)),
+                      border: Border.all(
+                        color: Colors.grey,
+                        width: 1,
+                      ),
+                    ),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          'Sign-In',
+                          "Sign-In",
                           style: TextStyle(
                               fontWeight: FontWeight.w500, fontSize: 33),
                         ),
                         TextFieldWidget(
-                          title: 'Email',
+                          title: "Email",
                           controller: emailController,
                           obscureText: false,
-                          hintText: 'Enter your Email',
+                          hintText: "Enter your email",
                         ),
                         TextFieldWidget(
-                          title: 'Password',
+                          title: "Password",
                           controller: passwordController,
                           obscureText: true,
-                          hintText: 'Enter your Password',
+                          hintText: "Enter your password",
                         ),
                         Align(
                           alignment: Alignment.center,
                           child: CustomMainButton(
-                            child: const Text(
-                              'Sign In',
-                              style: TextStyle(
-                                  letterSpacing: 0.6, color: Colors.black),
-                            ),
-                            color: yellowColor,
-                            isLoading: isLoading,
-                            onPressed: () async {
-                              setState(() {
-                                isLoading = true;
-                              });
-                              String output =
-                                  await authenticationMethods.signInUser(
-                                email: emailController.text,
-                                password: passwordController.text,
-                              );
-                              setState(() {
-                                isLoading = false;
-                              });
-                              if (output == "success") {
-                                //fuctions
-                                Utils().showSnackBar(
-                                    context: context, content: "Signed In");
-                              } else {
-                                Utils().showSnackBar(
-                                    context: context, content: output);
-                              }
-                            },
-                          ),
-                        ),
+                              child: const Text(
+                                "Sign In",
+                                style: TextStyle(
+                                    letterSpacing: 0.6, color: Colors.black),
+                              ),
+                              color: yellowColor,
+                              isLoading: isLoading,
+                              onPressed: () async {
+                                setState(() {
+                                  isLoading = true;
+                                });
+
+                                String output =
+                                    await authenticationMethods.signInUser(
+                                        email: emailController.text,
+                                        password: passwordController.text);
+                                setState(() {
+                                  isLoading = false;
+                                });
+                                if (output == "success") {
+                                  //functions
+                                } else {
+                                  //error
+                                  Utils().showSnackBar(
+                                      context: context, content: output);
+                                }
+                              }),
+                        )
                       ],
-                    )),
-                Row(
-                  children: [
-                    Expanded(child: Container(height: 1, color: Colors.grey)),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
-                      child: Text(
-                        'New to Amazon?',
-                        style: TextStyle(color: Colors.grey),
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          height: 1,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: Text(
+                          "New to Amazon?",
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 1,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ],
+                  ),
+                  CustomMainButton(
+                    child: const Text(
+                      "Create an Amazon Account",
+                      style: TextStyle(
+                        letterSpacing: 0.6,
+                        color: Colors.black,
                       ),
                     ),
-                    Expanded(child: Container(height: 1, color: Colors.grey)),
-                  ],
-                ),
-                CustomMainButton(
-                    child: const Text('Create an Amazon Account',
-                        style:
-                            TextStyle(letterSpacing: 0.6, color: Colors.black)),
                     color: Colors.grey[400]!,
                     isLoading: false,
                     onPressed: () {
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) {
-                        return const SignUpScreen();
-                      }));
-                    })
-              ],
-            )),
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return const SignUpScreen();
+                          },
+                        ),
+                      );
+                    },
+                  )
+                ],
+              ),
+            ),
           ),
         ),
       ),

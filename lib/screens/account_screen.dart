@@ -1,5 +1,6 @@
 import 'package:amazon_flutter/model/user_details_model.dart';
 import 'package:amazon_flutter/providers/user_details_provider.dart';
+import 'package:amazon_flutter/screens/sell_screen.dart';
 import 'package:amazon_flutter/utils/color_themes.dart';
 import 'package:amazon_flutter/utils/constants.dart';
 import 'package:amazon_flutter/utils/utils.dart';
@@ -48,11 +49,23 @@ class _AccountScreenState extends State<AccountScreen> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: CustomMainButton(
-                    child: const Text("Sell",
-                        style: TextStyle(color: Colors.black)),
-                    color: yellowColor,
-                    isLoading: false,
-                    onPressed: () {}),
+                  child: const Text(
+                    "Sell",
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                  ),
+                  color: yellowColor,
+                  isLoading: false,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SellScreen(),
+                      ),
+                    );
+                  },
+                ),
               ),
               ProductsShowcaseListView(
                 title: "Your Orders",
@@ -142,7 +155,7 @@ class IntroductionWidgetAccountScreen extends StatelessWidget {
                       ),
                     ),
                     TextSpan(
-                      text: "${userDetailsModel.name}",
+                      text: userDetailsModel.name,
                       style: TextStyle(
                         color: Colors.grey[800],
                         fontSize: 26,
