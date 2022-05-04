@@ -1,6 +1,6 @@
 import 'package:amazon_flutter/resources/cloudfirestore_methods.dart';
 import 'package:amazon_flutter/utils/constants.dart';
-import 'package:amazon_flutter/widgets/banner_add_widget.dart';
+import 'package:amazon_flutter/widgets/ad_banner_widget.dart';
 import 'package:amazon_flutter/widgets/categories_horizontal_list_view_bar.dart';
 import 'package:amazon_flutter/widgets/loading_widget.dart';
 import 'package:amazon_flutter/widgets/products_showcase_list_view.dart';

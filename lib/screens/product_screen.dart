@@ -91,81 +91,78 @@ class _ProductScreenState extends State<ProductScreen> {
                               cost: widget.productModel.cost),
                           spaceThingy,
                           CustomMainButton(
-                            child: const Text(
-                              "Buy Now",
-                              style: TextStyle(color: Colors.black),
-                            ),
-                            color: Colors.orange,
-                            isLoading: false,
-                            onPressed: () async {
-                              await CloudFirestoreClass().addProductToOrders(
-                                  model: widget.productModel,
-                                  userDetails: Provider.of<UserDetailsProvider>(
-                                          context,
-                                          listen: false)
-                                      .userDetails);
-                              Utils().showSnackBar(
-                                  context: context, content: "Done");
-                            },
-                          ),
+                              child: const Text(
+                                "Buy Now",
+                                style: TextStyle(color: Colors.black),
+                              ),
+                              color: Colors.orange,
+                              isLoading: false,
+                              onPressed: () async {
+                                await CloudFirestoreClass().addProductToOrders(
+                                    model: widget.productModel,
+                                    userDetails:
+                                        Provider.of<UserDetailsProvider>(
+                                                context,
+                                                listen: false)
+                                            .userDetails);
+                                Utils().showSnackBar(
+                                    context: context, content: "Done");
+                              }),
                           spaceThingy,
                           CustomMainButton(
-                            child: const Text(
-                              "Add to cart",
-                              style: TextStyle(color: Colors.black),
-                            ),
-                            color: yellowColor,
-                            isLoading: false,
-                            onPressed: () async {
-                              await CloudFirestoreClass().addProductToCart(
-                                  productModel: widget.productModel);
-                              Utils().showSnackBar(
-                                  context: context, content: "Added to cart.");
-                            },
-                          ),
+                              child: const Text(
+                                "Add to cart",
+                                style: TextStyle(color: Colors.black),
+                              ),
+                              color: yellowColor,
+                              isLoading: false,
+                              onPressed: () async {
+                                await CloudFirestoreClass().addProductToCart(
+                                    productModel: widget.productModel);
+                                Utils().showSnackBar(
+                                    context: context,
+                                    content: "Added to cart.");
+                              }),
                           spaceThingy,
                           CustomSimpleRoundedButton(
                               onPressed: () {
                                 showDialog(
-                                  context: context,
-                                  builder: (context) => ReviewDialog(
-                                    productUid: widget.productModel.uid,
-                                  ),
-                                );
+                                    context: context,
+                                    builder: (context) => ReviewDialog(
+                                          productUid: widget.productModel.uid,
+                                        ));
                               },
                               text: "Add a review for this product"),
                         ],
                       ),
                     ),
                     SizedBox(
-                      height: screenSize.height,
-                      child: StreamBuilder(
-                        stream: FirebaseFirestore.instance
-                            .collection("products")
-                            .doc(widget.productModel.uid)
-                            .collection("reviews")
-                            .snapshots(),
-                        builder: (context,
-                            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                                snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return Container();
-                          } else {
-                            return ListView.builder(
-                              itemCount: snapshot.data!.docs.length,
-                              itemBuilder: (context, index) {
-                                ReviewModel model =
-                                    ReviewModel.getModelFromJson(
-                                        json:
-                                            snapshot.data!.docs[index].data());
-                                return ReviewWidget(review: model);
-                              },
-                            );
-                          }
-                        },
-                      ),
-                    ),
+                        height: screenSize.height,
+                        child: StreamBuilder(
+                          stream: FirebaseFirestore.instance
+                              .collection("products")
+                              .doc(widget.productModel.uid)
+                              .collection("reviews")
+                              .snapshots(),
+                          builder: (context,
+                              AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                                  snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Container();
+                            } else {
+                              return ListView.builder(
+                                  itemCount: snapshot.data!.docs.length,
+                                  itemBuilder: (context, index) {
+                                    ReviewModel model =
+                                        ReviewModel.getModelFromJson(
+                                            json: snapshot.data!.docs[index]
+                                                .data());
+                                    return ReviewWidget(review: model);
+                                  });
+                            }
+                          },
+                        ))
                   ],
                 ),
               ),

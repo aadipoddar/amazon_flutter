@@ -128,7 +128,7 @@ List<Widget> testChildren = [
         sellerUid: "983498ihjb",
         rating: 1,
         noOfRating: 1),
-  ),
+  )
 ];
 
 List<String> keysOfRating = [

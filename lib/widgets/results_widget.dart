@@ -1,4 +1,5 @@
 import 'package:amazon_flutter/model/product_model.dart';
+import 'package:amazon_flutter/screens/product_screen.dart';
 import 'package:amazon_flutter/utils/color_themes.dart';
 import 'package:amazon_flutter/utils/utils.dart';
 import 'package:amazon_flutter/widgets/cost_widget.dart';
@@ -16,7 +17,14 @@ class ResultsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Size screenSize = Utils().getScreenSize();
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProductScreen(productModel: product),
+          ),
+        );
+      },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(

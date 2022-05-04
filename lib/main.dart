@@ -42,21 +42,20 @@ class AmazonClone extends StatelessWidget {
           scaffoldBackgroundColor: backgroundColor,
         ),
         home: StreamBuilder(
-          stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (context, AsyncSnapshot<User?> user) {
-            if (user.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(
-                  color: Colors.orange,
-                ),
-              );
-            } else if (user.hasData) {
-              return const ScreenLayout();
-            } else {
-              return const SignInScreen();
-            }
-          },
-        ),
+            stream: FirebaseAuth.instance.authStateChanges(),
+            builder: (context, AsyncSnapshot<User?> user) {
+              if (user.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.orange,
+                  ),
+                );
+              } else if (user.hasData) {
+                return const ScreenLayout();
+              } else {
+                return const SignInScreen();
+              }
+            }),
       ),
     );
   }

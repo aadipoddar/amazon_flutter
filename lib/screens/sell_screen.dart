@@ -25,6 +25,7 @@ class _SellScreenState extends State<SellScreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController costController = TextEditingController();
   List<int> keysForDiscount = [0, 70, 60, 50];
+  //keysofdiscoutn[selected -1]
 
   @override
   void dispose() {
@@ -37,137 +38,126 @@ class _SellScreenState extends State<SellScreen> {
   Widget build(BuildContext context) {
     Size screenSize = Utils().getScreenSize();
     return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: !isLoading
-            ? SingleChildScrollView(
-                child: SizedBox(
-                  height: screenSize.height,
-                  width: screenSize.width,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 10, horizontal: 20),
-                    child: Center(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Stack(
+        child: Scaffold(
+      backgroundColor: Colors.white,
+      body: !isLoading
+          ? SingleChildScrollView(
+              child: SizedBox(
+                height: screenSize.height,
+                width: screenSize.width,
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  child: Center(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Stack(
+                          children: [
+                            image == null
+                                ? Image.network(
+                                    "https://m.media-amazon.com/images/I/11uufjN3lYL._SX90_SY90_.png",
+                                    height: screenSize.height / 10,
+                                  )
+                                : Image.memory(
+                                    image!,
+                                    height: screenSize.height / 10,
+                                  ),
+                            IconButton(
+                                onPressed: () async {
+                                  Uint8List? temp = await Utils().pickImage();
+                                  if (temp != null) {
+                                    setState(() {
+                                      image = temp;
+                                    });
+                                  }
+                                },
+                                icon: const Icon(Icons.file_upload))
+                          ],
+                        ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 35, vertical: 10),
+                          height: screenSize.height * 0.7,
+                          width: screenSize.width * 0.7,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.grey,
+                              width: 1,
+                            ),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              image == null
-                                  ? Image.network(
-                                      "https://m.media-amazon.com/images/I/11uufjN3lYL._SX90_SY90_.png",
-                                      height: screenSize.height / 10,
-                                    )
-                                  : Image.memory(
-                                      image!,
-                                      height: screenSize.height / 10,
-                                    ),
-                              IconButton(
-                                  onPressed: () async {
-                                    Uint8List? temp = await Utils().pickImage();
-                                    if (temp != null) {
-                                      setState(
-                                        () {
-                                          image = temp;
-                                        },
-                                      );
-                                    }
+                              TextFieldWidget(
+                                  title: "Name",
+                                  controller: nameController,
+                                  obscureText: false,
+                                  hintText: "Enter the name of the item"),
+                              TextFieldWidget(
+                                  title: "Cost",
+                                  controller: costController,
+                                  obscureText: false,
+                                  hintText: "Enter the cost of the item"),
+                              const Text(
+                                "Discount",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 17),
+                              ),
+                              ListTile(
+                                title: const Text("None"),
+                                leading: Radio(
+                                  value: 1,
+                                  groupValue: selected,
+                                  onChanged: (int? i) {
+                                    setState(() {
+                                      selected = i!;
+                                    });
                                   },
-                                  icon: const Icon(Icons.file_upload))
+                                ),
+                              ),
+                              ListTile(
+                                title: const Text("70%"),
+                                leading: Radio(
+                                  value: 2,
+                                  groupValue: selected,
+                                  onChanged: (int? i) {
+                                    setState(() {
+                                      selected = i!;
+                                    });
+                                  },
+                                ),
+                              ),
+                              ListTile(
+                                title: const Text("60%"),
+                                leading: Radio(
+                                  value: 3,
+                                  groupValue: selected,
+                                  onChanged: (int? i) {
+                                    setState(() {
+                                      selected = i!;
+                                    });
+                                  },
+                                ),
+                              ),
+                              ListTile(
+                                title: const Text("50%"),
+                                leading: Radio(
+                                  value: 4,
+                                  groupValue: selected,
+                                  onChanged: (int? i) {
+                                    setState(() {
+                                      selected = i!;
+                                    });
+                                  },
+                                ),
+                              ),
                             ],
                           ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 35, vertical: 10),
-                            height: screenSize.height * 0.7,
-                            width: screenSize.width * 0.7,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Colors.grey,
-                                width: 1,
-                              ),
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                TextFieldWidget(
-                                    title: "Name",
-                                    controller: nameController,
-                                    obscureText: false,
-                                    hintText: "Enter the name of the item"),
-                                TextFieldWidget(
-                                    title: "Cost",
-                                    controller: costController,
-                                    obscureText: false,
-                                    hintText: "Enter the cost of the item"),
-                                const Text(
-                                  "Discount",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 17),
-                                ),
-                                ListTile(
-                                  title: const Text("None"),
-                                  leading: Radio(
-                                    value: 1,
-                                    groupValue: selected,
-                                    onChanged: (int? i) {
-                                      setState(
-                                        () {
-                                          selected = i!;
-                                        },
-                                      );
-                                    },
-                                  ),
-                                ),
-                                ListTile(
-                                  title: const Text("70%"),
-                                  leading: Radio(
-                                    value: 2,
-                                    groupValue: selected,
-                                    onChanged: (int? i) {
-                                      setState(
-                                        () {
-                                          selected = i!;
-                                        },
-                                      );
-                                    },
-                                  ),
-                                ),
-                                ListTile(
-                                  title: const Text("60%"),
-                                  leading: Radio(
-                                    value: 3,
-                                    groupValue: selected,
-                                    onChanged: (int? i) {
-                                      setState(
-                                        () {
-                                          selected = i!;
-                                        },
-                                      );
-                                    },
-                                  ),
-                                ),
-                                ListTile(
-                                  title: const Text("50%"),
-                                  leading: Radio(
-                                    value: 4,
-                                    groupValue: selected,
-                                    onChanged: (int? i) {
-                                      setState(
-                                        () {
-                                          selected = i!;
-                                        },
-                                      );
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          CustomMainButton(
+                        ),
+                        CustomMainButton(
                             child: const Text(
                               "Sell",
                               style: TextStyle(color: Colors.black),
@@ -197,9 +187,8 @@ class _SellScreenState extends State<SellScreen> {
                                 Utils().showSnackBar(
                                     context: context, content: output);
                               }
-                            },
-                          ),
-                          CustomMainButton(
+                            }),
+                        CustomMainButton(
                             child: const Text(
                               "Back",
                               style: TextStyle(color: Colors.black),
@@ -208,16 +197,14 @@ class _SellScreenState extends State<SellScreen> {
                             isLoading: false,
                             onPressed: () {
                               Navigator.pop(context);
-                            },
-                          )
-                        ],
-                      ),
+                            })
+                      ],
                     ),
                   ),
                 ),
-              )
-            : const LoadingWidget(),
-      ),
-    );
+              ),
+            )
+          : const LoadingWidget(),
+    ));
   }
 }

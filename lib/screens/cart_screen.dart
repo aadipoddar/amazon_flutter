@@ -1,11 +1,17 @@
 import 'package:amazon_flutter/model/product_model.dart';
+import 'package:amazon_flutter/providers/user_details_provider.dart';
+import 'package:amazon_flutter/resources/cloudfirestore_methods.dart';
 import 'package:amazon_flutter/utils/color_themes.dart';
 import 'package:amazon_flutter/utils/constants.dart';
+import 'package:amazon_flutter/utils/utils.dart';
 import 'package:amazon_flutter/widgets/cart_item_widget.dart';
 import 'package:amazon_flutter/widgets/custom_main_button.dart';
 import 'package:amazon_flutter/widgets/search_bar_widget.dart';
 import 'package:amazon_flutter/widgets/user_details_bar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({Key? key}) : super(key: key);
@@ -31,41 +37,74 @@ class _CartScreenState extends State<CartScreen> {
                   height: kAppBarHeight / 2,
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CustomMainButton(
-                    child: const Text(
-                      "Proceed to buy (n) items",
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    color: yellowColor,
-                    isLoading: false,
-                    onPressed: () {},
-                  ),
-                ),
+                    padding: const EdgeInsets.all(8.0),
+                    child: StreamBuilder(
+                      stream: FirebaseFirestore.instance
+                          .collection("users")
+                          .doc(FirebaseAuth.instance.currentUser!.uid)
+                          .collection("cart")
+                          .snapshots(),
+                      builder: (context,
+                          AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                              snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return CustomMainButton(
+                              child: const Text(
+                                "Loading",
+                              ),
+                              color: yellowColor,
+                              isLoading: true,
+                              onPressed: () {});
+                        } else {
+                          return CustomMainButton(
+                              child: Text(
+                                "Proceed to buy (${snapshot.data!.docs.length}) items",
+                                style: const TextStyle(color: Colors.black),
+                              ),
+                              color: yellowColor,
+                              isLoading: false,
+                              onPressed: () async {
+                                await CloudFirestoreClass().buyAllItemsInCart(
+                                    userDetails:
+                                        Provider.of<UserDetailsProvider>(
+                                                context,
+                                                listen: false)
+                                            .userDetails);
+                                Utils().showSnackBar(
+                                    context: context, content: "Done");
+                              });
+                        }
+                      },
+                    )),
                 Expanded(
-                  child: ListView.builder(
-                    itemCount: 5,
-                    itemBuilder: (context, index) {
-                      return CartItemWidget(
-                        product: ProductModel(
-                          url:
-                              "https://m.media-amazon.com/images/I/11uufjN3lYL._SX90_SY90_.png",
-                          productName: "Mobile Phone - Apple Iphone X",
-                          cost: 15000,
-                          discount: 0,
-                          uid: "jsbajsabh",
-                          sellerName: "Rick Seller",
-                          sellerUid: "665116as",
-                          rating: 1,
-                          noOfRating: 1,
-                        ),
-                      );
-                    },
-                  ),
-                ),
+                    child: StreamBuilder(
+                  stream: FirebaseFirestore.instance
+                      .collection("users")
+                      .doc(FirebaseAuth.instance.currentUser!.uid)
+                      .collection("cart")
+                      .snapshots(),
+                  builder: (context,
+                      AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                          snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Container();
+                    } else {
+                      return ListView.builder(
+                          itemCount: snapshot.data!.docs.length,
+                          itemBuilder: (context, index) {
+                            ProductModel model = ProductModel.getModelFromJson(
+                                json: snapshot.data!.docs[index].data());
+                            return CartItemWidget(product: model);
+                          });
+                    }
+                  },
+                ))
               ],
             ),
-            const UserDetailsBar(offset: 0),
+            const UserDetailsBar(
+              offset: 0,
+            ),
           ],
         ),
       ),

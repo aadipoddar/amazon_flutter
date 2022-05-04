@@ -109,22 +109,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 color: yellowColor,
                                 isLoading: isLoading,
                                 onPressed: () async {
-                                  setState(
-                                    () {
-                                      isLoading = true;
-                                    },
-                                  );
+                                  setState(() {
+                                    isLoading = true;
+                                  });
                                   String output =
                                       await authenticationMethods.signUpUser(
                                           name: nameController.text,
                                           address: addressController.text,
                                           email: emailController.text,
                                           password: passwordController.text);
-                                  setState(
-                                    () {
-                                      isLoading = false;
-                                    },
-                                  );
+                                  setState(() {
+                                    isLoading = false;
+                                  });
                                   if (output == "success") {
                                     Navigator.pushReplacement(
                                         context,
@@ -145,26 +141,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                   CustomMainButton(
-                    child: const Text(
-                      "Back",
-                      style: TextStyle(
-                        letterSpacing: 0.6,
-                        color: Colors.black,
-                      ),
-                    ),
-                    color: Colors.grey[400]!,
-                    isLoading: false,
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return const SignInScreen();
-                          },
+                      child: const Text(
+                        "Back",
+                        style: TextStyle(
+                          letterSpacing: 0.6,
+                          color: Colors.black,
                         ),
-                      );
-                    },
-                  )
+                      ),
+                      color: Colors.grey[400]!,
+                      isLoading: false,
+                      onPressed: () {
+                        Navigator.pushReplacement(context,
+                            MaterialPageRoute(builder: (context) {
+                          return const SignInScreen();
+                        }));
+                      })
                 ],
               ),
             ),

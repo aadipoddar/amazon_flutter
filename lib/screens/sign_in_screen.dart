@@ -137,26 +137,21 @@ class _SignInScreenState extends State<SignInScreen> {
                     ],
                   ),
                   CustomMainButton(
-                    child: const Text(
-                      "Create an Amazon Account",
-                      style: TextStyle(
-                        letterSpacing: 0.6,
-                        color: Colors.black,
-                      ),
-                    ),
-                    color: Colors.grey[400]!,
-                    isLoading: false,
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return const SignUpScreen();
-                          },
+                      child: const Text(
+                        "Create an Amazon Account",
+                        style: TextStyle(
+                          letterSpacing: 0.6,
+                          color: Colors.black,
                         ),
-                      );
-                    },
-                  )
+                      ),
+                      color: Colors.grey[400]!,
+                      isLoading: false,
+                      onPressed: () {
+                        Navigator.pushReplacement(context,
+                            MaterialPageRoute(builder: (context) {
+                          return const SignUpScreen();
+                        }));
+                      })
                 ],
               ),
             ),

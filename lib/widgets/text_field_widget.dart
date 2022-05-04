@@ -5,14 +5,13 @@ class TextFieldWidget extends StatefulWidget {
   final TextEditingController controller;
   final bool obscureText;
   final String hintText;
-
-  const TextFieldWidget(
-      {Key? key,
-      required this.title,
-      required this.controller,
-      required this.obscureText,
-      required this.hintText})
-      : super(key: key);
+  const TextFieldWidget({
+    Key? key,
+    required this.title,
+    required this.controller,
+    required this.obscureText,
+    required this.hintText,
+  }) : super(key: key);
 
   @override
   State<TextFieldWidget> createState() => _TextFieldWidgetState();
@@ -20,7 +19,7 @@ class TextFieldWidget extends StatefulWidget {
 
 class _TextFieldWidgetState extends State<TextFieldWidget> {
   late FocusNode focusNode;
-  bool isInFocus = true;
+  bool isInFocus = false;
 
   @override
   void initState() {
@@ -48,15 +47,19 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
       children: [
         Padding(
           padding: const EdgeInsets.only(bottom: 15),
-          child: Text(widget.title,
-              style:
-                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
+          child: Text(
+            widget.title,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 17,
+            ),
+          ),
         ),
         Container(
           decoration: BoxDecoration(boxShadow: [
             isInFocus
                 ? BoxShadow(
-                    color: Colors.orange.withOpacity(0.6),
+                    color: Colors.orange.withOpacity(0.4),
                     blurRadius: 8,
                     spreadRadius: 2,
                   )
@@ -72,16 +75,23 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
             controller: widget.controller,
             maxLines: 1,
             decoration: InputDecoration(
-                fillColor: Colors.white,
-                filled: true,
-                hintText: widget.hintText,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(3),
-                  borderSide: const BorderSide(color: Colors.grey, width: 1),
+              fillColor: Colors.white,
+              filled: true,
+              hintText: widget.hintText,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(3),
+                borderSide: const BorderSide(
+                  color: Colors.grey,
+                  width: 1,
                 ),
-                focusedBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.orange, width: 1),
-                )),
+              ),
+              focusedBorder: const OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Colors.orange,
+                  width: 1,
+                ),
+              ),
+            ),
           ),
         )
       ],

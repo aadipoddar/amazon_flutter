@@ -27,15 +27,14 @@ class ReviewDialog extends StatelessWidget {
 
       onSubmitted: (RatingDialogResponse res) async {
         CloudFirestoreClass().uploadReviewToDatabase(
-          productUid: productUid,
-          model: ReviewModel(
-            senderName: Provider.of<UserDetailsProvider>(context, listen: false)
-                .userDetails
-                .name,
-            description: res.comment,
-            rating: res.rating.toInt(),
-          ),
-        );
+            productUid: productUid,
+            model: ReviewModel(
+                senderName:
+                    Provider.of<UserDetailsProvider>(context, listen: false)
+                        .userDetails
+                        .name,
+                description: res.comment,
+                rating: res.rating.toInt()));
       },
     );
   }
