@@ -178,7 +178,7 @@ class CloudFirestoreClass {
     ProductModel model =
         ProductModel.getModelFromJson(json: (snapshot.data() as dynamic));
     int currentRating = model.rating;
-    int newRating = ((currentRating + reviewModel.rating) / 2).toInt();
+    int newRating = (currentRating + reviewModel.rating) ~/ 2;
     await firebaseFirestore
         .collection("products")
         .doc(productUid)

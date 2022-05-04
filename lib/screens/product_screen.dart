@@ -1,7 +1,5 @@
 import 'package:amazon_flutter/model/product_model.dart';
 import 'package:amazon_flutter/model/review_model.dart';
-import 'package:amazon_flutter/model/user_details_model.dart';
-//import 'package:amazon_flutter/providers/user_details_provider.dart';
 import 'package:amazon_flutter/utils/color_themes.dart';
 import 'package:amazon_flutter/utils/constants.dart';
 import 'package:amazon_flutter/utils/utils.dart';
