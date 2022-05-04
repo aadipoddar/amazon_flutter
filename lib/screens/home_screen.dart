@@ -69,11 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-          UserDetailsBar(
-            offset: offset,
-            userDetails:
-                UserDetailsModel(name: "Aadi", address: "Kolkata West Bengal"),
-          ),
+          UserDetailsBar(offset: offset),
         ],
       ),
     );
